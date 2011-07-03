@@ -1,0 +1,18 @@
+.wrapper
+  .content
+    table
+      thead
+        tr
+          th name
+          th description
+          th(class='forks') forks
+          th(class='watchers') watchers
+      tbody
+        - each val, key in packages
+          tr
+            td
+              a(href='#{val.repo ? val.repo.html_url : val.url}')= val.name
+            td= val.description ? val.description.slice(0, 50):''
+            td= val.repo ? val.repo.forks : ''
+            td= val.repo ? val.repo.watchers : ''
+

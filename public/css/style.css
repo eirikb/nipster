@@ -1,0 +1,63 @@
+body {
+    background: none repeat scroll 0 0 #EFF2F3;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+th {
+    cursor: pointer;
+}
+
+.wrapper {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #AFAFAF;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    width: 900px;
+    margin: 10px auto;
+}
+
+.content {
+    padding: 10px;
+}
+
+input {
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border: solid 1px #494949;
+    outline: none;
+    padding: 5px;
+}
+
+.paging_full_numbers span.paginate_button,
+.paging_full_numbers span.paginate_active {
+    border: 1px solid #494949;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 2px 5px;
+    margin: 0 3px;
+    cursor: pointer;
+}
+
+.paging_full_numbers span.paginate_button {
+    background-color: #FEFEFE;
+}
+
+.paging_full_numbers span.paginate_button:hover {
+    background-color: #EFF2F3;
+}
+
+.paging_full_numbers span.paginate_active {
+    background-color: #BEDCE7;
+}
+
+.sorting_desc, .sorting_asc {
+    text-decoration: underline;
+}
