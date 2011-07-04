@@ -30,13 +30,18 @@ th {
     height: 100px;
 }
 
-.npm > img {
+.npm img {
     height: 50px;
     display: inline;
 }
 
-.npm > span {
-    font-weight: bold;
+.npm span {
+    word-spacing: 15px;
+    margin-left: 15px;
+}
+
+.plus {
+    font-size: 40px;
 }
 
 input {
