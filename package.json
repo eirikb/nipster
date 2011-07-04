@@ -1,9 +1,0 @@
-{
-    "name": "Nipster!"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "2.4.0"
-    , "jade": ">= 0.0.1"
-  }
-}
