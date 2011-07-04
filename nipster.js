@@ -1,5 +1,4 @@
 var utils = require('utils.js'),
-path = require('path'),
 fileAll = 'packages-all.json',
 file = 'public/packages.json',
 all = {},
