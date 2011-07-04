@@ -26,6 +26,19 @@ th {
     padding: 10px;
 }
 
+.npm {
+    height: 100px;
+}
+
+.npm > img {
+    height: 50px;
+    display: inline;
+}
+
+.npm > span {
+    font-weight: bold;
+}
+
 input {
     -moz-border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 10px;
