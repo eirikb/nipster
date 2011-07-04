@@ -4,7 +4,9 @@ $(function() {
         bLengthChange: false,
         bInfo: false,
         sPaginationType: 'full_numbers',
-        iDisplayLength: 30
+        iDisplayLength: 30,
+        bProcessing: true,
+        sAjaxSource: 'packages.json'
     });
 });
 

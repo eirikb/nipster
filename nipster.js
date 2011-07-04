@@ -1,16 +1,18 @@
 var utils = require('utils.js'),
 path = require('path'),
-fileName = 'packages.json',
-packages = exports.packages = {},
+fileAll = 'packages-all.json',
+file = 'public/packages.json',
+all = {},
+pckages = {},
 updateGithub = function() {
-    var keys = Object.keys(packages).filter(function(key) {
-        var p = packages[key];
+    var keys = Object.keys(all).filter(function(key) {
+        var p = all[key];
         return ! p.repo && p.repository && p.repository.url && p.repository.url.match(/github/i);
     });
 
     if (keys.length > 0) {
         var key = keys[0],
-        origUrl = packages[key].repository.url,
+        origUrl = all[key].repository.url,
         url = origUrl.replace(/(^.*\.com\/)|:|.git$/g, '');
 
         console.log('%d - %s - %s', keys.length, key, url);
@@ -20,37 +22,40 @@ updateGithub = function() {
             path: '/repos/' + url
         },
         function(repo) {
-            packages[key].repo = repo;
-            utils.saveJSON(fileName, packages, function() {
-                setTimeout(updateGithub, 1000);
+            all[key].repo = repo;
+            utils.saveJSON(fileAll, all, function() {
+                updateGithub();
             });
         });
     } else {
-        console.log('DONE!');
+        packages = [];
+        Object.keys(all).forEach(function(key) {
+            var a = all[key];
+            packages.push([a.name, a.description, a.repo ? a.repo.forks: '', a.repo ? a.repo.watchers: '']);
+        });
+        packages = {
+            aaData: packages
+        };
+        utils.saveJSON(file, packages, function() {
+            console.log('DONE!');
+        });
     }
-},
-update = exports.update = function() {
-    console.log('Updating...');
-    utils.loadJSON(fileName, function(err, data) {
-        Object.keys(data).forEach(function(key) {
-            packages[key] = data[key];
-        });
-        utils.getJSON({
-            host: 'registry.npmjs.org'
-        },
-        function(data) {
-            Object.keys(data).forEach(function(key) {
-                if (!packages[key]) {
-                    packages[key] = data[key];
-                }
-            });
-            updateGithub();
-        });
-    });
 };
 
-console.log(fileName)
-
-update();
-setInterval(update, 60 * 60 * 1000);
+utils.loadJSON(fileAll, function(err, data) {
+    Object.keys(data).forEach(function(key) {
+        all[key] = data[key];
+    });
+    utils.getJSON({
+        host: 'registry.npmjs.org'
+    },
+    function(data) {
+        Object.keys(data).forEach(function(key) {
+            if (!all[key]) {
+                all[key] = data[key];
+            }
+        });
+        updateGithub();
+    });
+});
 
