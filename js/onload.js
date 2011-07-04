@@ -6,7 +6,7 @@ $(function() {
         sPaginationType: 'full_numbers',
         iDisplayLength: 30,
         bProcessing: true,
-        sAjaxSource: '../../packages.json'
+        sAjaxSource: '../packages.json'
     });
 });
 
