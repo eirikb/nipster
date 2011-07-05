@@ -1,6 +1,6 @@
 var utils = require('utils.js'),
-fileAll = 'packages-all.json',
-file = 'public/packages.json',
+fileAll = 'json/packages-all.json',
+file = 'json/public/packages.json',
 all = {},
 packages = {},
 updateGithub = function() {
