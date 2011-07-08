@@ -33,7 +33,7 @@ updateGithub = function() {
             return all[key].repo;
         }).forEach(function(key) {
             var a = all[key];
-            packages.push(['<a href="' + a.repo.url + '">' + a.name + '</a>', a.description, a.repo ? a.repo.forks: '', a.repo ? a.repo.watchers: '']);
+            packages.push(['<a href="' + a.repo.html_url + '">' + a.name + '</a>', a.description, a.repo ? a.repo.forks: '', a.repo ? a.repo.watchers: '']);
         });
         packages = {
             aaData: packages,
