@@ -1,6 +1,6 @@
-var utils = require('utils.js'),
+var utils = require('./utils.js'),
 fileAll = 'json/packages-all.json',
-file = 'json/public/packages.json',
+file = 'json/packages.json',
 all = {},
 packages = {},
 updateGithub = function() {
@@ -21,6 +21,7 @@ updateGithub = function() {
             path: '/repos/' + url
         },
         function(repo) {
+            repo.updated = new Date();
             all[key].repo = repo;
             utils.saveJSON(fileAll, all, function() {
                 updateGithub();
@@ -28,12 +29,15 @@ updateGithub = function() {
         });
     } else {
         packages = [];
-        Object.keys(all).forEach(function(key) {
+        Object.keys(all).filter(function(key) {
+            return all[key].repo;
+        }).forEach(function(key) {
             var a = all[key];
-            packages.push([a.name, a.description, a.repo ? a.repo.forks: '', a.repo ? a.repo.watchers: '']);
+            packages.push(['<a href="' + a.repo.url + '">' + a.name + '</a>', a.description, a.repo ? a.repo.forks: '', a.repo ? a.repo.watchers: '']);
         });
         packages = {
-            aaData: packages
+            aaData: packages,
+            lastUpdate: new Date()
         };
         utils.saveJSON(file, packages, function() {
             console.log('DONE!');
