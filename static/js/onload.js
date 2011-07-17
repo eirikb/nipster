@@ -1,5 +1,5 @@
 $(function() {
-	$.get('json/packages.json', function(data) {
+	$.getJSON('json/packages.json', function(data) {
 		console.log(data);
 		var i, l, $includeUntracked, $table;
 		for (i = 0; i < data.packages.length; i++) {
