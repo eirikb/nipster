@@ -121,3 +121,8 @@ td {
     overflow: hidden;
     white-space: nowrap; 
 }
+
+.lastUpdate {
+    float: right;
+    padding-right: 200px;
+}
