@@ -1,7 +1,7 @@
 $(function() {
 	$.getJSON('json/packages.json', function(data) {
-		console.log(data);
-		var i, l, $includeUntracked, $table;
+		var i, l, $includeUntracked, date, $lastUpdate, $table;
+
 		for (i = 0; i < data.packages.length; i++) {
 			l = data.packages[i];
 			l[0] = '<a href="' + data.urls[i] + '">' + l[0] + '</a>';
@@ -29,7 +29,13 @@ $(function() {
 			}
 		})).append('<label for="includeUntracked">Include untracked');
 
-		$('div.dataTables_filter').append($includeUntracked);
+        date = new Date(data.end);
+
+        $lastUpdate = $('<label>').addClass('lastUpdate').text('Last update: ' + date.getFullYear() +
+                '-' + (date.getMonth() + 1) + '-' + date.getDate());
+
+		$('div.dataTables_filter').append($includeUntracked).prepend($lastUpdate);
+        
 	});
 });
 
