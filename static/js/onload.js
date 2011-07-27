@@ -11,7 +11,7 @@ $(function() {
 			bLengthChange: false,
 			bInfo: false,
 			sPaginationType: 'full_numbers',
-			iDisplayLength: 15,
+			iDisplayLength: 21,
 			bProcessing: true,
 			aaData: data.packages
 		});
