@@ -54,6 +54,15 @@ input {
     padding: 5px;
 }
 
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.dataTables_paginate {
+    padding-top: 10px;
+}
+
 .paging_full_numbers span.paginate_button,
 .paging_full_numbers span.paginate_active {
     border: 1px solid #494949;
@@ -62,6 +71,10 @@ input {
     padding: 2px 5px;
     margin: 0 3px;
     cursor: pointer;
+}
+
+.dataTables_paginate {
+    padding-top: 10px;
 }
 
 .paging_full_numbers span.paginate_button {
@@ -78,4 +91,33 @@ input {
 
 .sorting_desc, .sorting_asc {
     text-decoration: underline;
+}
+
+tr {
+    height: 1em;
+}
+
+tr.odd {
+	background-color: #FFCCCC;
+}
+
+tr.even {
+	background-color: white;
+}
+
+th.name, th.forks, th.watchers {
+    width: 10%;
+}
+
+tr {
+    line-height: 20px;
+}
+
+tr.odd:hover, tr.even:hover {
+    background-color: #FFAAAA;
+}
+
+td {
+    overflow: hidden;
+    white-space: nowrap; 
 }
