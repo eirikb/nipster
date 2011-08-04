@@ -36,12 +36,17 @@ th {
 }
 
 .npm span {
-    word-spacing: 15px;
     margin-left: 15px;
+    margin-right: 15px;
 }
 
 .plus {
     font-size: 40px;
+}
+
+span.big {
+    margin-left: 0px;
+    font-size: 30px;
 }
 
 input {
