@@ -1,6 +1,6 @@
 $(function() {
 	$.getJSON('json/packages.json', function(data) {
-		var i, l, $includeUntracked, date, $lastUpdate, $table;
+		var i, l, $includeNongithub, date, $lastUpdate, $table;
 
 		for (i = 0; i < data.packages.length; i++) {
 			l = data.packages[i];
@@ -16,25 +16,26 @@ $(function() {
 			aaData: data.packages
 		});
 
-		$includeUntracked = $('<div>').append($('<input id="includeUntracked" type="checkbox">').change(function() {
-            var i, untracked;
+		$includeNongithub = $('<div>').append($('<input id="includeNongithub" type="checkbox">').change(function() {
+            var i, nongithub, p;
 			$table.fnClearTable();
 			$table.fnAddData(data.packages);
 			if (this.checked) {
-                untracked = [];
-				for (i = 0; i < data.untracked.length; i++) {
-					untracked.push([data.untracked[i][0], '', '', '']);
+                nongithub = [];
+				for (i = 0; i < data.nongithub.length; i++) {
+                    p = data.nongithub[i];
+					nongithub.push([p[0], p[1], '', '']);
 				}
-                $table.fnAddData(untracked);
+                $table.fnAddData(nongithub);
 			}
-		})).append('<label for="includeUntracked">Include untracked');
+		})).append('<label for="includeNongithub">Include non-github');
 
         date = new Date(data.end);
 
         $lastUpdate = $('<label>').addClass('lastUpdate').text('Last update: ' + date.getFullYear() +
                 '-' + (date.getMonth() + 1) + '-' + date.getDate());
 
-		$('div.dataTables_filter').append($includeUntracked).prepend($lastUpdate);
+		$('div.dataTables_filter').append($includeNongithub).prepend($lastUpdate);
         
 	});
 });
