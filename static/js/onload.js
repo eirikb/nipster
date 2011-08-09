@@ -4,7 +4,7 @@ $(function() {
 
 		for (i = 0; i < data.packages.length; i++) {
 			l = data.packages[i];
-			l[0] = '<a href="' + data.urls[i] + '">' + l[0] + '</a>';
+			l[0] = '<a href="https://github.com/' + data.urls[i] + '">' + l[0] + '</a>';
 		}
 		$table = $('table').dataTable({
 			aaSorting: [[3, 'desc']],
