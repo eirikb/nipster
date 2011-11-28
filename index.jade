@@ -1,0 +1,32 @@
+!!! 5
+html
+  html
+    head
+      title Nipster! npm search tool for Node.js
+      meta(name='description', content='npm search tool for node (Node.js)')
+      meta(name='author', content='Eirik Brandtzæg, eirikb@eirikb.no')
+
+      link(rel='stylesheet', href='style.css')
+ 
+      script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+      script(src='http://fgnass.github.com/spin.js/spin.min.js')
+      script(src='assets/jquery.dataTables.min.js')
+      script(src='onload.js')
+
+      body
+        a(href='http://github.com/eirikb/nipster')
+          img.fork(src='http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png', alt='Fork me on GitHub')
+        .wrapper
+          .content
+            .npm
+              img(src='assets/npm.png')
+              span.plus +
+              img(src='assets/github.png')
+              span.plus =
+              span.big Perfect rating!
+            table.display
+              thead
+                th.name name
+                th description
+                th.forks forks
+                th.watchers watchers
