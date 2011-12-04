@@ -103,11 +103,11 @@ tr {
 }
 
 tr.odd {
-	background-color: #FFCCCC;
+    background-color: #FFCCCC;
 }
 
 tr.even {
-	background-color: white;
+    background-color: white;
 }
 
 th.name, th.forks, th.watchers {
@@ -130,4 +130,12 @@ td {
 .lastUpdate {
     float: right;
     padding-right: 200px;
+}
+
+.fork {
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    border: 0; 
+    z-index: 50;
 }
