@@ -6,11 +6,11 @@ $(function() {
     });
     $('.content').append($spinner);
 
-    $.getJSON('json/packages.json', function(data) {
+    $.getJSON('packages.json', function(data) {
         var $includeNongithub, date, $lastUpdate, $table, $input;
 
         $.each(data.packages, function(i, p) {
-            p[0] = '<a href="https://github.com/' + data.urls[i] + '">' + p[0] + '</a>';
+            p[0] = '<a href="https://github.com/' + data.repoUrls[i] + '">' + p[0] + '</a>';
         });
 
         $table = $('table').dataTable({

@@ -110,8 +110,12 @@ tr.even {
     background-color: white;
 }
 
-th.name, th.forks, th.watchers {
-    width: 10%;
+th.name, th.author {
+    width: 15%;
+}
+
+th.forks, th.watchers {
+    width: 8%;
 }
 
 tr {
