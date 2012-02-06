@@ -7,10 +7,14 @@ $(function() {
     $('.content').append($spinner);
 
     $.getJSON('packages.json', function(data) {
-        var $includeNongithub, date, $lastUpdate, $table, $input;
+        var date, $lastUpdate, $table, $input;
 
         $.each(data.packages, function(i, p) {
             p[0] = '<a href="https://github.com/' + data.repoUrls[i] + '">' + p[0] + '</a>';
+
+            if (data.authorUrls[i]) {
+                p[2] = '<a href="' + data.authorUrls[i] + '">' + p[2] + '</a>';
+            }
         });
 
         $table = $('table').dataTable({
@@ -26,27 +30,10 @@ $(function() {
             }
         });
 
-        $includeNongithub = $('<div>').append($('<input id="includeNongithub" type="checkbox">').change(function() {
-            var $this = $(this),
-            nongithub;
-
-            $table.fnClearTable();
-            $table.fnAddData(data.packages);
-
-            if ($this.is(':checked')) {
-                nongithub = [];
-                $.each(data.nongithub, function(i, n) {
-                    nongithub.push([n[0], n[1], '', '']);
-                });
-                $table.fnAddData(nongithub);
-            }
-        })).append('<label for="includeNongithub">Include non-github');
-
         date = new Date(data.end);
 
-        $lastUpdate = $('<label>').addClass('lastUpdate').text('Last update: ' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
-
-        $('div.dataTables_filter').append($includeNongithub).prepend($lastUpdate);
+        $lastUpdate = $('<label>').addClass('lastUpdate');
+        $lastUpdate.text('Last update: ' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
 
         $input = $(':input[type=text]').focus();
         if (window.location.hash.length > 1) {
