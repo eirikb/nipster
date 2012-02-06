@@ -19,7 +19,7 @@ $(function() {
         });
 
         $table = $('table').dataTable({
-            aaSorting: [[3, 'desc']],
+            aaSorting: [[4, 'desc']],
             bLengthChange: false,
             bInfo: false,
             sPaginationType: 'full_numbers',
