@@ -1,43 +1,43 @@
 !!! 5
 html
-  html
-    head
-      title Nipster! npm search tool for Node.js
-      meta(name='description', content='npm search tool for node (Node.js)')
-      meta(name='author', content='Eirik Brandtzæg, eirikb@eirikb.no')
+  head
+    title Nipster! npm search tool for Node.js
+    meta(name='description', content='npm search tool for node (Node.js)')
+    meta(name='author', content='Eirik Brandtzæg, eirikb@eirikb.no')
 
-      link(rel='stylesheet', href='style.css')
- 
-      script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
-      script(src='http://fgnass.github.com/spin.js/spin.min.js')
-      script(src='assets/jquery.dataTables.min.js')
-      script(src='main.js')
+    link(rel='stylesheet', href='style.css')
 
-      body
-        a(href='http://github.com/eirikb/nipster')
-          img.fork(src='http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png', alt='Fork me on GitHub')
-        .wrapper
-          .content
-            .npm
-              img(src='assets/npm.png')
-              span.plus +
-              img(src='assets/github.png')
-              span.plus =
-              span.big Perfect rating!
-            table.display
-              thead
-                th.name name
-                th description
-                th.author author
-                th.forks forks
-                th.watchers watchers
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src='http://fgnass.github.com/spin.js/spin.min.js')
+    script(src='assets/jquery.dataTables.min.js')
+    script(src='main.js')
 
-        script
-          var _gaq=_gaq || [];
-          _gaq.push(['_setAccount','UA-28988150-1']);
-          _gaq.push(['_trackPageview']);
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
+    body
+      a(href='http://github.com/eirikb/nipster')
+        img.fork(src='http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png', alt='Fork me on GitHub')
+      .wrapper
+        .content
+          .npm
+            img(src='assets/npm.png')
+            span.plus +
+            img(src='assets/github.png')
+            span.plus =
+            span.big Perfect rating!
+          table.display
+            thead
+              th.name name
+              th description
+              th.author author
+              th.forks forks
+              th.watchers watchers
+              th.npm npm
+
+      script
+        var _gaq=_gaq || [];
+        _gaq.push(['_setAccount','UA-28988150-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
