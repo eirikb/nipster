@@ -36,6 +36,7 @@ $(function() {
 
         $lastUpdate = $('<label>').addClass('lastUpdate');
         $lastUpdate.text('Last update: ' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+        $('div.dataTables_filter').append($lastUpdate);
 
         $input = $(':input[type=text]').focus();
         if (window.location.hash.length > 1) {
