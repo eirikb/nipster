@@ -10,7 +10,7 @@ $(function() {
         var date, $lastUpdate, $table, $input;
 
         $.each(data.packages, function(i, p) {
-            p[5] = '<a class="npm" href="http://search.npmjs.org/#/' + p[0] + '">/\\</a>';
+            p[6] = '<a class="npm" href="http://search.npmjs.org/#/' + p[0] + '">/\\</a>';
             if (data.repoUrls[i]) {
                 p[0] = '<a href="https://github.com/' + data.repoUrls[i] + '">' + p[0] + '</a>';
             }
