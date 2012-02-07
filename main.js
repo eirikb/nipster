@@ -45,6 +45,7 @@ $(function() {
             if (e.keyCode === 27) {
                 $table.fnFilter('');
                 $input.val('');
+                $input.click();
             }
             window.location.hash = $input.val();
         });
