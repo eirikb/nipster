@@ -41,6 +41,7 @@ $(function() {
         $input = $(':input[type=text]').focus();
         if (window.location.hash.length > 1) {
             $input.val(window.location.hash.slice(1));
+            $table.fnFilter($input.val());
         }
         $input.keyup(function(e) {
             if (e.keyCode === 27) {
