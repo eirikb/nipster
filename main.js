@@ -7,7 +7,7 @@ $(function() {
     $('.content').append($spinner);
 
     $.getJSON('packages.json', function(data) {
-        var date, $lastUpdate, $table, $input;
+        var date, $lastUpdate, $table, $input, hashChange;
 
         $.each(data.packages, function(i, p) {
             p[6] = '<a class="npm" href="http://search.npmjs.org/#/' + p[0] + '">/\\</a>';
@@ -39,15 +39,25 @@ $(function() {
         $('div.dataTables_filter').append($lastUpdate);
 
         $input = $(':input[type=text]').focus();
-        if (window.location.hash.length > 1) {
-            $input.val(window.location.hash.slice(1));
-            $table.fnFilter($input.val());
-        }
+        hashChange = function() {
+            if (window.location.hash.length > 1) {
+                $input.val(window.location.hash.slice(1));
+                $table.fnFilter($input.val());
+            } else {
+                $input.val('');
+                $table.fnFilter('');
+            }
+        };
+        hashChange();
+        $(window).on('hashchange', hashChange);
         $input.keyup(function(e) {
             if (e.keyCode === 27) {
                 $table.fnFilter('');
                 $input.val('');
                 $input.click();
+            }
+            if (window.location.hash.length > 1) {
+                window.history.replaceState({}, '', '#' + $input.val());
             }
             window.location.hash = $input.val();
         });
