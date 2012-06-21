@@ -57,7 +57,7 @@ $(function() {
                 $input.click();
             }
             if (window.location.hash.length > 1) {
-                window.history.replaceState({}, '', '#' + $input.val());
+                window.History.replaceState({}, '', '#' + $input.val());
             }
             window.location.hash = $input.val();
         });
