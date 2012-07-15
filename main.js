@@ -39,9 +39,11 @@ $(function() {
         $('div.dataTables_filter').append($lastUpdate);
 
         $input = $(':input[type=text]').focus();
-        hashChange = function() {
-            if (window.location.hash.length > 1) {
-                $input.val(window.location.hash.slice(1));
+        hashChange = function () {
+            var hash = window.location.hash.slice(1);
+            if (hash.length > 0) {
+                hash = decodeURIComponent(hash);
+                $input.val(hash);
                 $table.fnFilter($input.val());
             } else {
                 $input.val('');
