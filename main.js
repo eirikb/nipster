@@ -21,6 +21,7 @@ $(function() {
 
         $table = $('table').dataTable({
             aaSorting: [[4, 'desc']],
+            aoColumnDefs: [ { sType: 'html', aTargets:[0] } ],
             bLengthChange: false,
             bInfo: false,
             sPaginationType: 'full_numbers',
