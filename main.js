@@ -11,6 +11,7 @@ $(function() {
 
         $.each(data.packages, function(i, p) {
             p[7] = '<a class="npm" href="http://search.npmjs.org/#/' + p[0] + '">△</a>';
+            p[1] = '<span title="' + p[1] + '">' + p[1] + '</span>';
             if (data.repoUrls[i]) {
                 p[0] = '<a href="https://github.com/' + data.repoUrls[i] + '">' + p[0] + '</a>';
             }
