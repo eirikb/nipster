@@ -10,7 +10,7 @@ $(function() {
         var date, $lastUpdate, $table, $input, hashChange;
 
         $.each(data.packages, function(i, p) {
-            p[7] = '<a class="npm" href="http://search.npmjs.org/#/' + p[0] + '">/\\</a>';
+            p[7] = '<a class="npm" href="http://search.npmjs.org/#/' + p[0] + '">△</a>';
             if (data.repoUrls[i]) {
                 p[0] = '<a href="https://github.com/' + data.repoUrls[i] + '">' + p[0] + '</a>';
             }
@@ -20,7 +20,7 @@ $(function() {
         });
 
         $table = $('table').dataTable({
-            aaSorting: [[4, 'desc']],
+            aaSorting: [[5, 'desc']],
             aoColumnDefs: [ { sType: 'html', aTargets:[0] } ],
             bLengthChange: false,
             bInfo: false,
