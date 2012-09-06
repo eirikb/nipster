@@ -18,7 +18,7 @@ th {
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
-    width: 900px;
+    min-width: 1000px;
     margin: 10px auto;
 }
 
