@@ -31,7 +31,18 @@ $(function() {
             aaData: data.packages,
             fnInitComplete: function() {
                 $spinner.remove();
-            }
+            },
+            bAutoWidth: false,
+            aoColumns: [
+              {sWidth: '80px'},
+              {sWidth: '400px'},
+              {sWidth: '60px'},
+              {sWidth: '35px'},
+              {sWidth: '25px'},
+              {sWidth: '40px'},
+              {sWidth: '20px'},
+              {sWidth: '20px'}
+            ]
         });
 
         date = new Date(data.end);
