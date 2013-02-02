@@ -9,7 +9,6 @@ $(function() {
             aTargets: [0]
         }],
         bLengthChange: false,
-        bInfo: false,
         sPaginationType: 'full_numbers',
         iDisplayLength: 21,
         bProcessing: true,
@@ -18,20 +17,6 @@ $(function() {
     });
 
     var $input = $(':input[type=text]').focus();
-
-    var hashChange = function() {
-            var hash = window.location.hash.slice(1);
-            if (hash.length > 0) {
-                hash = decodeURIComponent(hash);
-                $input.val(hash);
-                $table.fnFilter($input.val());
-            } else {
-                $input.val('');
-                $table.fnFilter('');
-            }
-        };
-    hashChange();
-    $(window).on('hashchange', hashChange);
 
     $input.keyup(function(e) {
         if (e.keyCode === 27) {
@@ -44,4 +29,16 @@ $(function() {
         }
         window.location.hash = $input.val();
     });
+
+    $(window).on('hashchange', function() {
+        var hash = window.location.hash.slice(1);
+        if (hash.length > 0) {
+            hash = decodeURIComponent(hash);
+            $input.val(hash);
+            $table.fnFilter($input.val());
+        } else {
+            $input.val('');
+            $table.fnFilter('');
+        }
+    }).trigger('hashchange');
 });
