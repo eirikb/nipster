@@ -1,58 +1,25 @@
 $(function() {
-    var $spinner = $(new Spinner().spin().el).css({
-        left: 50,
-        top: 50,
-        height: 100
+    var $table = $('table').dataTable({
+        sAjaxSource: 'packages.json',
+        aaSorting: [
+            [5, 'desc']
+        ],
+        aoColumnDefs: [{
+            sType: 'html',
+            aTargets: [0]
+        }],
+        bLengthChange: false,
+        bInfo: false,
+        sPaginationType: 'full_numbers',
+        iDisplayLength: 21,
+        bProcessing: true,
+        bAutoWidth: false,
+        bDeferRender: true
     });
-    $('.content').append($spinner);
 
-    $.getJSON('packages.json', function(data) {
-        var date, $lastUpdate, $table, $input, hashChange;
+    var $input = $(':input[type=text]').focus();
 
-        $.each(data.packages, function(i, p) {
-            p[7] = '<a class="npm" href="http://search.npmjs.org/#/' + p[0] + '">△</a>';
-            p[1] = '<span title="' + p[1] + '">' + p[1] + '</span>';
-            if (data.repoUrls[i]) {
-                p[0] = '<a href="https://github.com/' + data.repoUrls[i] + '">' + p[0] + '</a>';
-            }
-            if (data.authorUrls[i]) {
-                p[2] = '<a href="' + data.authorUrls[i] + '">' + p[2] + '</a>';
-            }
-        });
-
-        $table = $('table').dataTable({
-            aaSorting: [[5, 'desc']],
-            aoColumnDefs: [ { sType: 'html', aTargets:[0] } ],
-            bLengthChange: false,
-            bInfo: false,
-            sPaginationType: 'full_numbers',
-            iDisplayLength: 21,
-            bProcessing: true,
-            aaData: data.packages,
-            fnInitComplete: function() {
-                $spinner.remove();
-            },
-            bAutoWidth: false,
-            aoColumns: [
-              {sWidth: '80px'},
-              {sWidth: '400px'},
-              {sWidth: '60px'},
-              {sWidth: '35px'},
-              {sWidth: '25px'},
-              {sWidth: '40px'},
-              {sWidth: '20px'},
-              {sWidth: '20px'}
-            ]
-        });
-
-        date = new Date(data.end);
-
-        $lastUpdate = $('<label>').addClass('lastUpdate');
-        $lastUpdate.text('Last update: ' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
-        $('div.dataTables_filter').append($lastUpdate);
-
-        $input = $(':input[type=text]').focus();
-        hashChange = function () {
+    var hashChange = function() {
             var hash = window.location.hash.slice(1);
             if (hash.length > 0) {
                 hash = decodeURIComponent(hash);
@@ -63,19 +30,18 @@ $(function() {
                 $table.fnFilter('');
             }
         };
-        hashChange();
-        $(window).on('hashchange', hashChange);
-        $input.keyup(function(e) {
-            if (e.keyCode === 27) {
-                $table.fnFilter('');
-                $input.val('');
-                $input.click();
-            }
-            if (window.location.hash.length > 1) {
-                window.History.replaceState({}, '', '#' + $input.val());
-            }
-            window.location.hash = $input.val();
-        });
+    hashChange();
+    $(window).on('hashchange', hashChange);
+
+    $input.keyup(function(e) {
+        if (e.keyCode === 27) {
+            $table.fnFilter('');
+            $input.val('');
+            $input.click();
+        }
+        if (window.location.hash.length > 1) {
+            window.History.replaceState({}, '', '#' + $input.val());
+        }
+        window.location.hash = $input.val();
     });
 });
-
