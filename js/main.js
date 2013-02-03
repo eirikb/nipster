@@ -1,6 +1,6 @@
 $(function() {
     var $table = $('table').dataTable({
-        sAjaxSource: 'arrays.txt',
+        sAjaxSource: 'packages.json',
         aaSorting: [
             [5, 'desc']
         ],
