@@ -1,6 +1,6 @@
 $(function() {
     var $table = $('table').dataTable({
-        sAjaxSource: 'packages.json',
+        sAjaxSource: 'arrays.txt',
         aaSorting: [
             [5, 'desc']
         ],
@@ -13,7 +13,17 @@ $(function() {
         iDisplayLength: 21,
         bProcessing: true,
         bAutoWidth: false,
-        bDeferRender: true
+        bDeferRender: true,
+        fnRowCallback: function(tr, data, i) {
+            var $gh = $('td:first a', tr);
+            var href = '' + $gh.attr('href');
+            if (!href.match(/github\.com/)) $gh.attr('href', 'https://github.com/' + href);
+
+            var $npm = $('td:last', tr);
+            if ($npm.html().length > 0) return;
+            var name = $('td:first', tr).text();
+            $npm.html('<a class="npm" href="http://npmjs.org/package/' + name + '">△</a>');
+        }
     });
 
     var $input = $(':input[type=text]').focus();
