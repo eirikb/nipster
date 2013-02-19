@@ -17,7 +17,10 @@ $(function() {
         fnRowCallback: function(tr, data, i) {
             var $gh = $('td:first', tr);
             if ($gh.children().size() === 0) {
-                var $gha = $('<a>').attr('href', 'https://github.com/' + $gh.text()).text($gh.text());
+                var name = $gh.text().split(' ');
+                var url = name[0];
+                name = name[1];
+                var $gha = $('<a>').attr('href', 'https://github.com/' + url).text(name);
                 $gh.text('').append($gha);
             }
 
