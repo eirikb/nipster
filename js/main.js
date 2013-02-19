@@ -15,9 +15,11 @@ $(function() {
         bAutoWidth: false,
         bDeferRender: true,
         fnRowCallback: function(tr, data, i) {
-            var $gh = $('td:first a', tr);
-            var href = '' + $gh.attr('href');
-            if (!href.match(/github\.com/)) $gh.attr('href', 'https://github.com/' + href);
+            var $gh = $('td:first', tr);
+            if ($gh.children().size() === 0) {
+                var $gha = $('<a>').attr('href', 'https://github.com/' + $gh.text()).text($gh.text());
+                $gh.text('').append($gha);
+            }
 
             var $npm = $('td:last', tr);
             if ($npm.html().length > 0) return;
