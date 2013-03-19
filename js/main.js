@@ -1,6 +1,12 @@
 $(function() {
     var $table = $('table').dataTable({
         sAjaxSource: 'packages.json',
+        fnServerData: function(sSource, aoData, fnCallback, oSettings) {
+            oSettings.jqXHR = $.ajax({
+                url: sSource,
+                success: fnCallback
+            });
+        },
         aaSorting: [
             [5, 'desc']
         ],
