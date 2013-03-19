@@ -8,6 +8,11 @@ $(function() {
             sType: 'html',
             aTargets: [0]
         }],
+        aoColumns: [
+        null, null, null, null, null, null, null, null,
+        {
+            bVisible: false
+        }],
         bLengthChange: false,
         sPaginationType: 'full_numbers',
         iDisplayLength: 21,
