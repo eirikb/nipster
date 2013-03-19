@@ -7,6 +7,9 @@ $(function() {
         aoColumnDefs: [{
             sType: 'html',
             aTargets: [0]
+        }, {
+            asSorting: ['desc', 'asc'],
+            aTargets: ['_all']
         }],
         aoColumns: [
         null, null, null, null, null, null, null, null,
