@@ -20,19 +20,19 @@ $(function() {
         bAutoWidth: false,
         bDeferRender: true,
         fnRowCallback: function(tr, data, i) {
-            var $gh = $('td:first', tr);
-            if ($gh.children().size() === 0) {
-                var name = $gh.text().split(' ');
-                var url = name[0];
-                name = name[1];
-                var $gha = $('<a>').attr('href', 'https://github.com/' + url).text(name);
-                $gh.text('').append($gha);
-            }
-
-            var $npm = $('td:last', tr);
+            var $td = $('td', tr);
+            var $npm = $td.last();
             if ($npm.html().length > 0) return;
-            var name = $('td:first', tr).text();
-            $npm.html('<a class="npm" href="http://npmjs.org/package/' + name + '">△</a>');
+
+            var $gh = $td.first();
+            var name = $gh.text().split(' ');
+            var url = name[0];
+            name = name[1];
+            var $gha = $('<a>').attr('href', 'https://github.com/' + url).text(name);
+            $gh.text('').append($gha);
+
+            $npm.html('<a class="npm" href="http://npmjs.org/package/' + name + '" title="' + data[8] + '">△</a>');
+            $td.eq(1).prop('title', data[1]);
         }
     }).fnSetFilteringDelay(200);
 
