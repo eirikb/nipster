@@ -34,7 +34,7 @@ $(function() {
             var name = $('td:first', tr).text();
             $npm.html('<a class="npm" href="http://npmjs.org/package/' + name + '">△</a>');
         }
-    });
+    }).fnSetFilteringDelay(200);
 
     var $input = $(':input[type=text]').focus();
 
