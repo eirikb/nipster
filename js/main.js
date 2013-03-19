@@ -50,15 +50,13 @@ $(function() {
         window.location.hash = $input.val();
     });
 
-    $(window).on('hashchange', function() {
-        var hash = window.location.hash.slice(1);
-        if (hash.length > 0) {
-            hash = decodeURIComponent(hash);
-            $input.val(hash);
-            $table.fnFilter($input.val());
-        } else {
-            $input.val('');
-            $table.fnFilter('');
-        }
-    }).trigger('hashchange');
+    var hash = window.location.hash.slice(1);
+    if (hash.length > 0) {
+        hash = decodeURIComponent(hash);
+        $input.val(hash);
+        $table.fnFilter($input.val());
+    } else {
+        $input.val('');
+        $table.fnFilter('');
+    }
 });
