@@ -35,10 +35,14 @@ $(function() {
 
             var $gh = $td.first();
             var name = $gh.text().split(' ');
-            var url = name[0];
-            name = name[1];
-            var $gha = $('<a>').attr('href', 'https://github.com/' + url).text(name);
-            $gh.text('').append($gha);
+            if (name.length > 1) {
+                var url = name[0];
+                name = name[1];
+                var $gha = $('<a>').attr('href', 'https://github.com/' + url).text(name);
+                $gh.text('').append($gha);
+            } else {
+                name = name[0];
+            }
 
             $npm.html('<a class="npm" href="http://npmjs.org/package/' + name + '" title="' + data[8] + '">△</a>');
             $td.eq(1).prop('title', data[1]);
