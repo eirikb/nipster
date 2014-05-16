@@ -1,14 +1,17 @@
-$(function () {
+$(function() {
   var $table = $('table').dataTable({
-    sAjaxSource: 'packages.json',
-    fnServerData: function (sSource, aoData, fnCallback, oSettings) {
+    sAjaxSource: '//nipster.blob.core.windows.net/cdn/npm-datatables.json',
+    fnServerData: function(sSource, aoData, fnCallback, oSettings) {
       oSettings.jqXHR = $.ajax({
         url: sSource,
-        success: fnCallback
+        success: function(data) {
+          $('#last-update').text('Last update: ' + data.lastUpdate);
+          fnCallback(data);
+        }
       });
     },
     aaSorting: [
-        [6, 'desc']
+      [6, 'desc']
     ],
     bLengthChange: false,
     sPaginationType: 'full_numbers',
@@ -16,7 +19,7 @@ $(function () {
     bProcessing: true,
     bAutoWidth: false,
     bDeferRender: true,
-    fnRowCallback: function (tr, data) {
+    fnRowCallback: function(tr, data) {
       var $c = $(tr).children();
       $c.eq(0).html('<a title="' + data[7] + '" href="https://www.npmjs.org/package/' + data[0] + '" target="_blank">' + data[0] + '</a>');
 
@@ -27,14 +30,14 @@ $(function () {
 
       $c.eq(2).prop('title', data[2]);
 
-        var author = data[3].split(';');
-        $c.eq(3).html('<a href="' + author[0] + '" target="_blank">' + author[1] + '</a>');
+      var author = data[3].split(';');
+      $c.eq(3).html('<a href="' + author[0] + '" target="_blank">' + author[1] + '</a>');
     }
   }).fnSetFilteringDelay(300);
 
   var $input = $(':input[type=text]').focus();
 
-  $input.keyup(function (e) {
+  $input.keyup(function(e) {
     if (e.keyCode === 27) {
       $table.fnFilter('');
       $input.val('');
