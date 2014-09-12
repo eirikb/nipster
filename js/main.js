@@ -21,17 +21,18 @@ $(function() {
     bDeferRender: true,
     fnRowCallback: function(tr, data) {
       var $c = $(tr).children();
-      $c.eq(0).html('<a title="' + data[7] + '" href="https://www.npmjs.org/package/' + data[0] + '" target="_blank">' + data[0] + '</a>');
+      $c.eq(0).html($('<a>', { title: data[7], href: 'https://www.npmjs.org/package/' + data[0], target: '_blank'}).text(data[0]));
 
       if (data[1]) {
         var name = data[1].split('/');
-        $c.eq(1).html('<a href="https://github.com/' + data[1] + '" target="_blank">' + name[name.length - 1] + '</a>');
+        $c.eq(1).html($('<a>', {href: 'https://github.com/' + data[1], target: '_blank'}).text(name[name.length - 1]));
       }
 
-      $c.eq(2).prop('title', data[2]);
+      var desc = $c.eq(2).text();
+      $c.eq(2).prop('title', desc).text(desc);
 
       var author = data[3].split(';');
-      $c.eq(3).html('<a href="' + author[0] + '" target="_blank">' + author[1] + '</a>');
+      $c.eq(3).html($('<a>', {href: author[0], target: '_blank'}).text(author[1]));
     }
   }).fnSetFilteringDelay(300);
 
