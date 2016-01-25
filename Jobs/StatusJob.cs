@@ -12,6 +12,7 @@ namespace Nipster.Jobs
 {
     public class StatusJob
     {
+        private const int LogLineLimit = 1000;
         private static readonly Log Log = new Log(typeof (StatusJob));
 
         public static void Process(
@@ -26,34 +27,42 @@ namespace Nipster.Jobs
 
             gitHubQueue.FetchAttributes();
 
-            statusWriter.WriteLine($"Updated: {DateTime.UtcNow}");
+            statusWriter.WriteLine($"Updated: {DateTime.UtcNow.ToString("u")}");
             statusWriter.WriteLine($"GitHub Queue count: {gitHubQueue.ApproximateMessageCount}");
             statusWriter.WriteLine($"GitHub Table count: {CountTable(gitHubTable, "github")}");
             statusWriter.WriteLine($"Npm Table count: {CountTable(npmTable, "npm")}");
-            statusWriter.WriteLine("Log snippet:");
+            statusWriter.WriteLine("");
+            statusWriter.WriteLine($"Last {LogLineLimit} lines from log:");
 
-            var blob = container.ListBlobs(null, true)
+            var lines = container.ListBlobs(null, true)
                 .OfType<ICloudBlob>()
                 .OrderByDescending(b => b.Properties.LastModified)
-                .FirstOrDefault();
+                .Take(2)
+                .Reverse()
+                .SelectMany(ReadAllLines)
+                .Reverse()
+                .Take(LogLineLimit)
+                .Reverse();
 
-            if (blob != null)
+            lines.ToList().ForEach(statusWriter.WriteLine);
+
+            Log.Info("Done");
+        }
+
+        private static List<string> ReadAllLines(ICloudBlob blob)
+        {
+            var lines = new List<string>();
+            using (var stream = blob.OpenRead())
             {
-                using (var stream = blob.OpenRead())
+                using (var reader = new StreamReader(stream))
                 {
-                    var i = stream.Length;
-                    if (i > 20000)
+                    while (!reader.EndOfStream)
                     {
-                        stream.Seek(-20000, SeekOrigin.End);
-                    }
-                    using (var reader = new StreamReader(stream))
-                    {
-                        statusWriter.Write(reader.ReadToEnd());
+                        lines.Add(reader.ReadLine());
                     }
                 }
             }
-
-            Log.Info("Done");
+            return lines;
         }
 
         private static int CountTable(CloudTable table, string partitionKey)
