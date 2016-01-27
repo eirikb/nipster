@@ -11,8 +11,8 @@ namespace Nipster.Jobs
     {
         private static readonly Log Log = new Log(typeof (NpmRegistryToNpmTable));
 
-        public static async void Process(
-            [TimerTrigger("12:00:00", RunOnStartup = true)] TimerInfo timerInfo,
+        public static async void ProcessNpmRegistryToNpmTable(
+            [TimerTrigger("20:00:00", RunOnStartup = true)] TimerInfo timerInfo,
             [Table("npm")] CloudTable table)
         {
             Log.Info("Quering packages...");

@@ -11,8 +11,8 @@ namespace Nipster.Jobs
     {
         private static readonly Log Log = new Log(typeof (NpmTableToGitHubQueue));
 
-        public static async Task Process(
-            [TimerTrigger("00:10:00", RunOnStartup = true)] TimerInfo timerInfo,
+        public static async Task ProcessNpmTableToGitHubQueue(
+            [TimerTrigger("24:00:00", RunOnStartup = true)] TimerInfo timerInfo,
             [Table("npm")] CloudTable table,
             [Queue("github")] ICollector<string> outputQueueMessage, [Queue("github")] CloudQueue queue)
         {
