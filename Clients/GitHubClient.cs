@@ -29,6 +29,8 @@ namespace Nipster.Clients
                 }
                 var response = await client.GetAsync(url);
 
+                if (response.StatusCode == HttpStatusCode.NotModified) return null;
+
                 var repo = new GitHubEntity("" + repoUrl)
                 {
                     StatusCode = "" + response.StatusCode
