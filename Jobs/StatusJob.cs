@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage.Table;
+using Nipster.Util;
 
 namespace Nipster.Jobs
 {
@@ -14,7 +15,7 @@ namespace Nipster.Jobs
     {
         private const int LogLineLimit = 100;
 
-        public static async Task ProcessStatusJob(
+        public static async Task ProcessStatusJob2(
             [TimerTrigger("00:30:00", RunOnStartup = true)] TimerInfo timerInfo,
             [Queue("github")] CloudQueue gitHubQueue,
             [Table("github")] CloudTable gitHubTable,
@@ -25,8 +26,9 @@ namespace Nipster.Jobs
             gitHubQueue.FetchAttributes();
 
             var gitHubQueueCount = gitHubQueue.ApproximateMessageCount;
-            var gitHubTableCount = await CountTable(gitHubTable, "github");
-            var npmTableCount = await CountTable(npmTable, "npm");
+            var npmTableCount = 0;
+            await npmTable.QueryAsync(new TableQuery<TableEntity>().Select(new List<string> {"PartitionKey"}),
+                list => npmTableCount += list.Count);
 
             var lines = container.ListBlobs(null, true)
                 .OfType<ICloudBlob>()
@@ -38,11 +40,26 @@ namespace Nipster.Jobs
                 .Take(LogLineLimit)
                 .Reverse();
 
+            var githubStatus = new Dictionary<string, int>();
+
+            await gitHubTable.QueryAsync(new TableQuery<GitHubEntity>().Select(new List<string> {"StatusCode"}),
+                list => list.GroupBy(e => e.StatusCode).ToList().ForEach(e =>
+                {
+                    int current;
+                    var key = e.Key ?? "OK";
+                    current = githubStatus.TryGetValue(key, out current) ? current : 0;
+                    githubStatus[key] = current + e.Count();
+                }));
+
+            var gitHubTableCount = githubStatus.Values.Sum();
 
             statusWriter.WriteLine($"Updated: {DateTime.UtcNow.ToString("u")}");
             statusWriter.WriteLine($"GitHub Queue count: {gitHubQueueCount}");
             statusWriter.WriteLine($"GitHub Table count: {gitHubTableCount}");
             statusWriter.WriteLine($"Npm Table count: {npmTableCount}");
+            statusWriter.WriteLine("GitHub statuses:");
+            githubStatus.ToList().ForEach(pair => { statusWriter.WriteLine($"  {pair.Key}: {pair.Value}"); });
+
             statusWriter.WriteLine("");
             statusWriter.WriteLine($"Last {LogLineLimit} lines from log:");
             lines.ToList().ForEach(statusWriter.WriteLine);
@@ -62,26 +79,6 @@ namespace Nipster.Jobs
                 }
             }
             return lines;
-        }
-
-        private static async Task<int> CountTable(CloudTable table, string partitionKey)
-        {
-            var query = new TableQuery().Where(
-                TableQuery.GenerateFilterCondition("PartitionKey",
-                    QueryComparisons.Equal,
-                    partitionKey)).Select(new List<string> {"PartitionKey"});
-
-            var count = 0;
-            TableContinuationToken token = null;
-
-            do
-            {
-                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
-                count += queryResult.Results.Count;
-                token = queryResult.ContinuationToken;
-            } while (token != null);
-
-            return count;
         }
     }
 }
