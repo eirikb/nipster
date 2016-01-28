@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Nipster.Util
 {
@@ -28,6 +31,26 @@ namespace Nipster.Util
                 }
                 return sBuilder.ToString();
             }
+        }
+
+        public static async Task QueryAsync<T>(this CloudTable table, Action<List<T>> action)
+            where T : TableEntity, new()
+        {
+            await table.QueryAsync(new TableQuery<T>(), action);
+        }
+
+        public static async Task QueryAsync<T>(this CloudTable table, TableQuery<T> query, Action<List<T>> action)
+            where T : TableEntity, new()
+        {
+            if (query == null) query = new TableQuery<T>();
+            TableContinuationToken token = null;
+
+            do
+            {
+                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
+                action(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
         }
     }
 }

@@ -22,11 +22,11 @@ namespace Nipster.Jobs
             [Blob("$root/npm-datatables.json", FileAccess.Write)] Stream output)
         {
             var githubs = new Dictionary<string, GitHubEntity>();
-            await GetEntities<GitHubEntity>(gitHubTable, list => list.ForEach(gh => githubs.Add(gh.Name, gh)));
+            await gitHubTable.QueryAsync<GitHubEntity>(list => list.ForEach(gh => githubs.Add(gh.Name, gh)));
             Log.Info($"Got {githubs.Count} github packages");
 
             var data = new List<object[]>();
-            await GetEntities<NpmEntity>(npmTable, list => list.ForEach(npm =>
+            await npmTable.QueryAsync<NpmEntity>(list => list.ForEach(npm =>
             {
                 GitHubEntity gitHubRepo;
                 gitHubRepo = githubs.TryGetValue(npm.GitHubRepoUrl, out gitHubRepo)
@@ -62,19 +62,6 @@ namespace Nipster.Jobs
                     await memoryStream.CopyToAsync(gzipStream);
                 }
             }
-        }
-
-        private static async Task GetEntities<T>(CloudTable table, Action<List<T>> action) where T : Entity, new()
-        {
-            var query = new TableQuery<T>();
-            TableContinuationToken token = null;
-
-            do
-            {
-                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
-                action(queryResult.Results);
-                token = queryResult.ContinuationToken;
-            } while (token != null);
         }
     }
 }
