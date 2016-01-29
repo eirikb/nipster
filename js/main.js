@@ -1,6 +1,6 @@
 $(function() {
   var $table = $('table').dataTable({
-    sAjaxSource: '//nipster.blob.core.windows.net/cdn/npm-datatables.json',
+    sAjaxSource: '//nipster.blob.core.windows.net/npm-datatables.json',
     fnServerData: function(sSource, aoData, fnCallback, oSettings) {
       oSettings.jqXHR = $.ajax({
         url: sSource,
