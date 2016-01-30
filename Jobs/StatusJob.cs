@@ -13,7 +13,7 @@ namespace Nipster.Jobs
 {
     public class StatusJob
     {
-        private const int LogLineLimit = 100;
+        private const int LogLineLimit = 500;
 
         public static async Task ProcessStatusJob2(
             [TimerTrigger("00:30:00", RunOnStartup = true)] TimerInfo timerInfo,
