@@ -66,11 +66,12 @@ namespace Nipster.Clients
             return Regex.IsMatch(u, "github.com", RegexOptions.IgnoreCase) ? u : null;
         }
 
-        private static string GitHubName(string url)
+        public static string GitHubName(string url)
         {
             url = Regex.Replace(url, @".*github.com.", "", RegexOptions.IgnoreCase);
             url = Regex.Replace(url, @"\.git$", "", RegexOptions.IgnoreCase);
             url = Regex.Replace(url, @"(.*\/.*)\/issues", "", RegexOptions.IgnoreCase);
+            url = Regex.Replace(url, @"^\/*", "");
             return url.Trim().ToLower();
         }
     }
